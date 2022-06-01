@@ -1,0 +1,21 @@
+{
+    "short_name": "Lightbox Controller",
+    "name": "Lightbox Controller",
+    "icons": [
+      {
+        "src": "/images/icons-192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/images/icons-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/controller",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/controller",
+    "theme_color": "#000000"
+  }

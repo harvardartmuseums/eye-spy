@@ -1,0 +1,116 @@
+html, body {
+  padding: 0px;
+  margin: 0px;
+
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* Application Home Page */
+#home {}
+
+/* Screens */
+.screens {
+  display: grid;
+  grid-gap: 0px;
+
+  background: #000000;
+
+  position: fixed;
+  top: 0px;
+  left: 0px;  
+
+  font-size: 200%;
+}
+
+.lb-xl {
+  max-height:3200px;
+  min-width:4000px;
+}
+
+.screens.grid-3x3 {
+  grid-template-columns: 1936px 1936px 1936px;
+  grid-template-rows: 1091px 1091px 1091px;
+}
+
+.screens.grid-1x1 {
+  grid-template-columns: 5808px;
+  grid-template-rows: 3272px;
+}
+
+.lb-position-center {
+  align-items: center;
+  justify-items: center;
+}
+
+.lb-position-left {
+  align-items: center;
+  justify-items: left;
+}
+
+.overlay {
+  z-index: 999999;
+  background: none;
+  color: #ffffff;  
+}
+
+.o-xxxl {
+  font-size: 14.0rem;
+}
+
+.o-xxl {
+  font-size: 7.0rem;
+}
+
+.o-xl {
+  font-size: 3.5rem;
+}
+
+.o-l {
+  font-size: 3rem;
+}
+
+.w-45 {
+  width: 45%!important;
+}
+
+/* Controller */
+#controller {}
+
+/* Shades */
+#shades {
+  background: #ffffff;
+  color: #000000;
+  display: grid;
+  grid-gap: 0px;
+  align-items: center;
+  justify-items: center;
+
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+  font-size: 200%;
+}
+
+#shades.grid-1x1 {
+  grid-template-columns: 3840px;
+  grid-template-rows: 1080px;
+}
+
+#shades.grid-2x1 {
+  grid-template-columns: 1920px 1920px;
+  grid-template-rows: 1080px;
+}
+
+#shades.grid-4x1 {
+  grid-template-columns: 960px 960px 960px 960px;
+  grid-template-rows: 1080px;
+}
+
+#shades .shade {
+  color: #000000;
+}
