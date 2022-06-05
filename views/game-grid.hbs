@@ -1,0 +1,57 @@
+<div class="container-fluid p-4">
+    <header>
+        <h1>{{data.project.title}}</h1>
+        This is an exercise in believing in the subjectivity of art. 
+        <ul>
+            <li>Don't read the wall labels</li>
+            <li>Don't believe what you see</li>
+            <li>Be receptive to different perspectives</li>
+        </ul>
+    </header>
+
+    <div id="game-board">
+        <div id="game-header">
+            I spy with my artificial eye ...
+        </div>
+        <ul class="game-message-list"></ul>
+    </div>
+</div>
+
+
+<script>
+    let socket = io('/player');
+    let gameBoard = document.getElementById("game-board");
+    let gameHeader = document.getElementById("game-header");
+    let gameMessages = document.getElementById("game-messages");
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // ready to go
+
+        socket.on('join game', (game) => {
+
+        });
+
+        socket.on('game started', (game) => {
+            updateGameHeader(game);
+        });        
+
+        socket.on('game updated', (game) => {
+            updateGameBoard(game);
+        });
+
+        socket.on('game ended', (game) => {
+
+        });                
+    });
+
+    function updateGameHeader(game) {
+
+    }
+    
+    function updateGameBoard(game) {
+        gameMessages.innerHTML = '';
+        game.clues.forEach(clue => {
+            parameter.innerHTML += `<li>${clue}</li>`;
+        })
+    }
+</script>

@@ -1,0 +1,35 @@
+<div class="container-fluid p-4">
+    <header>
+        <h1>{{data.project.title}}</h1>
+        <p class="lead">{{data.project.description}}</p>
+        <p class="alert alert-dark">{{data.project.instructions}}</p>
+    </header>    
+    
+    {{!-- Main Controller Body --}}
+    <div class="accordion accordion-flush" id="menu">    
+        {{#each data.galleries}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#floor-{{@key}}" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Level {{@key}}</h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="floor-{{@key}}" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    {{#each this}}
+                         <a class="btn btn-outline-secondary btn-lg d-flex p-3" href="/mcp/galleries/{{galleryid}}">{{gallerynumber}}: {{name}}</a>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>  
+</div>
+
+<script>
+    let socket = io('/mcp');
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // ready to go
+    })
+</script>

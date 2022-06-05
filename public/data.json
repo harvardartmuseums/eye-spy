@@ -1,7 +1,7 @@
 {
     "project": {
-        "title": "Lightbox Template - Node.js + Socket.io",
-        "description": "Enter a description of the project.",
-        "instructions": "Enter info on how to set it up in the Lightbox."
+        "title": "A(Eye)-Spy",
+        "description": "A simple game in which an AI tells you what it sees in a gallery and you try to find the object it's describing",
+        "instructions": "Wait for the game admin to start the game. Then read the clues and try to locate the art object."
     }
 }

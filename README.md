@@ -1,14 +1,14 @@
-# Lightbox Template - Node.js + Socket.io
+# A(Eye)-Spy
 
 ## Features
 
-* Controller - a PWA for an iOS device 
-* Screens - a CSS grid layout for the nine screen video wall 
-* Shades - a CSS grid layout for the projection screen
+* MCP - a PWA for an iOS device 
+* Game Board - a PWA for an iOS device 
 
 ## Overview
 
-This template is for Lightbox projects that have components of the interface on multiple screens that need to share data and/or wish to communicate in some way.
+A simple game to be played while in the galleries of Harvard Art Museums. This is an exercise in believing in the subjectivity of art. 
+
 
 ## Developers
 

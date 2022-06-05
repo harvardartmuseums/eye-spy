@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// load application specific environment variables
+require('dotenv').config();
+
 /**
  * Module dependencies.
  */

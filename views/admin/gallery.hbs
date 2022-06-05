@@ -1,0 +1,11 @@
+<div class="container-fluid p-4">
+    <h1>{{data.gallery.gallerynumber}}: {{data.gallery.name}}</h1>
+    <div>
+        <ul class="list-group">
+            {{#data.objects}}
+                <li class="list-group-item"><img src="{{images.[0].iiifbaseuri}}/full/100,/0/default.jpg"><a href="/mcp/object/{{objectid}}">{{title}}</a></li>
+            {{/data.objects}}
+        </ul>
+    </div>
+
+</div>

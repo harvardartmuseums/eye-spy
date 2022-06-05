@@ -1,0 +1,26 @@
+<div class="container-fluid p-4">
+
+</div>
+
+<script>
+    let socket = io('/mcp');
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // ready to go
+    });
+
+    function startGame(){
+
+        socket.emit('start game');
+    }
+    
+    function updateGame() {
+
+        socket.emit('update game');
+    }
+
+    function endGame() {
+
+        socket.emit('end game');
+    }
+</script>

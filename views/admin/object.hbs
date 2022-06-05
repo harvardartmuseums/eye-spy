@@ -1,0 +1,187 @@
+<div class="container-fluid">
+    <header class="p-2">
+        <h1>{{data.object.title}}</h1>
+        <h2>Gallery {{data.object.gallery.gallerynumber}}, {{data.object.gallery.name}}</h2>
+        <figure>
+            <img src="{{data.object.images.[0].iiifbaseuri}}/full/150,/0/default.jpg">
+        </figure>
+        <div class="pb-3"> 
+            {{data.object.labeltext}}
+        </div>
+        <div class="d-grid">
+            <button type="button" class="btn btn-lg btn-secondary p-4">Start Game</button>
+        </div>
+    </header>
+
+    <hr>
+
+    <div class="accordion accordion-flush" id="menu">    
+        {{#if data.ai.features.region.text}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#regions-text-list" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Regions - Text <span class="badge bg-primary rounded-pill">{{data.ai.features.region.text.length}}</span></h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="regions-text-list" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    <ul class="list-group">
+                    {{#each data.ai.features.region.text}}
+                        <li class="list-group-item p-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-text-{{annotationid}}">
+                                <label class="form-check-label" for="region-text-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if data.ai.features.region.face}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#regions-faces-list" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Regions - Faces <span class="badge bg-primary rounded-pill">{{data.ai.features.region.face.length}}</span></h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="regions-faces-list" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    <ul class="list-group">
+                    {{#each data.ai.features.region.face}}
+                        <li class="list-group-item p-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-face-{{annotationid}}">
+                                <label class="form-check-label" for="region-face-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        {{/if}}
+
+        {{#if data.ai.features.region.tag}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#regions-tags-list" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Regions - Tags <span class="badge bg-primary rounded-pill">{{data.ai.features.region.tag.length}}</span></h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="regions-tags-list" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    <ul class="list-group">
+                    {{#each data.ai.features.region.tag}}
+                        <li class="list-group-item p-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-tag-{{annotationid}}">
+                                <label class="form-check-label" for="region-tag-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        {{/if}}
+        
+        {{#if data.ai.features.full.description}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#full-descriptions-list" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Descriptions <span class="badge bg-primary rounded-pill">{{data.ai.features.full.description.length}}</span></h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="full-descriptions-list" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    <ul class="list-group">
+                    {{#each data.ai.features.full.description}}
+                        <li class="list-group-item p-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="description-{{annotationid}}">
+                                <label class="form-check-label" for="description-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        {{/if}}
+
+        {{#if data.ai.features.full.category}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#full-categories-list" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Categories <span class="badge bg-primary rounded-pill">{{data.ai.features.full.category.length}}</span></h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="full-categories-list" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    <ul class="list-group">
+                    {{#each data.ai.features.full.category}}
+                        <li class="list-group-item p-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="category-{{annotationid}}">
+                                <label class="form-check-label" for="category-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        {{/if}}
+
+        {{#if data.ai.features.full.tag}}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#full-tags-list" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2>Tags <span class="badge bg-primary rounded-pill">{{data.ai.features.full.tag.length}}</span></h2>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="full-tags-list" data-bs-parent="#menu">
+                <div class="accordion-body d-grid gap-2 mb-4">
+                    <ul class="list-group">
+                    {{#each data.ai.features.full.tag}}
+                        <li class="list-group-item p-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="tag-{{annotationid}}">
+                                <label class="form-check-label" for="tag-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>            
+        </div>
+        {{/if}}
+
+    </div>
+</div>
+
+<script>
+    let socket = io('/mcp');
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // ready to go
+    });
+
+    function startGame(){
+
+        socket.emit('start game');
+    }
+    
+    function updateGame() {
+
+        socket.emit('update game');
+    }
+
+    function endGame() {
+
+        socket.emit('end game');
+    }
+</script>
