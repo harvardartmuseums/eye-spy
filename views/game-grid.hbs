@@ -1,28 +1,33 @@
-<div class="container-fluid p-4">
-    <header>
-        <h1>{{data.project.title}}</h1>
-        This is an exercise in believing in the subjectivity of art. 
-        <ul>
-            <li>Don't read the wall labels</li>
-            <li>Don't believe what you see</li>
-            <li>Be receptive to different perspectives</li>
-        </ul>
-    </header>
+<header class="bg-light p-4 mb-4">
+    <h1 class="display-5 fw-bold">{{data.project.title}}</h1>
+    <p class="lead">
+        An exercise in believing in the subjectivity of art
+    </p> 
+    <ul>
+        <li>Don't read the wall labels</li>
+        <li>Don't believe what you see</li>
+        <li>Be receptive to different perspectives</li>
+    </ul>
+</header>
 
-    <div id="game-board">
-        <div id="game-header">
-            I spy with my artificial eye ...
-        </div>
-        <ul class="game-message-list"></ul>
+<div class="container-fluid p-4" id="game-board">
+    <div id="game-header">
+        Waiting for the MCP to start a game <span class="spinner-border spinner-border-sm"></span>
     </div>
+    <ul id="game-message-list"></ul>
 </div>
+
+<footer class="d-flex flex-wrap justify-content-between p-3 mt-4 border-top">
+    <p class="col-md-4 mb-0 text-muted"><a href="https://hvrd.art"><img width="40" src="/images/H_slash.png"></a></p>
+    <p class="col-md-4 mb-0 text-muted justify-content-end">Crafted with <a href="https://nodejs.org/en/">Node.js</a>, <a href="https://getbootstrap.com/">Bootstrap</a>, <a href="https://animejs.com/">Anime.js</a></p>        
+</footer>
 
 
 <script>
     let socket = io('/player');
     let gameBoard = document.getElementById("game-board");
     let gameHeader = document.getElementById("game-header");
-    let gameMessages = document.getElementById("game-messages");
+    let gameMessages = document.getElementById("game-message-list");
 
     document.addEventListener('DOMContentLoaded', (event) => {
         // ready to go
@@ -33,6 +38,7 @@
 
         socket.on('game started', (game) => {
             updateGameHeader(game);
+            updateGameBoard(game);
         });        
 
         socket.on('game updated', (game) => {
@@ -45,13 +51,14 @@
     });
 
     function updateGameHeader(game) {
-
+        gameHeader.innerHTML = '<h2>Let the games begin</h2>';
+        gameHeader.innerHTML += `<p>You are in gallery ${game.gallery.number}, ${game.gallery.name}, on Level ${game.gallery.floor}.</p><p>You are standing amongst ${game.gallery.objectcount}-ish artworks.</p><p>The AIs are colluding and about ready to challenge your notion of aesthetics and power to think outside the box.</p>`;
     }
     
     function updateGameBoard(game) {
-        gameMessages.innerHTML = '';
+        gameMessages.innerHTML = 'We spy with our artificial eyes...';
         game.clues.forEach(clue => {
-            parameter.innerHTML += `<li>${clue}</li>`;
+            gameMessages.innerHTML += `<li>${clue.body}</li>`;
         })
     }
 </script>

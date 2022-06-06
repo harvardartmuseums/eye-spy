@@ -9,7 +9,10 @@
             {{data.object.labeltext}}
         </div>
         <div class="d-grid">
-            <button type="button" class="btn btn-lg btn-secondary p-4">Start Game</button>
+            <button type="button" class="btn btn-lg btn-secondary p-4" id="game-toggle">Start Game</button>
+            <div class="mt-4" id="game-stats">
+                
+            </div>
         </div>
     </header>
 
@@ -29,7 +32,7 @@
                     {{#each data.ai.features.region.text}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="region-text-{{annotationid}}">
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-text-{{annotationid}}" data-body="{{{body}}}">
                                 <label class="form-check-label" for="region-text-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
@@ -53,7 +56,7 @@
                     {{#each data.ai.features.region.face}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="region-face-{{annotationid}}">
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-face-{{annotationid}}" data-body="{{{body}}}">
                                 <label class="form-check-label" for="region-face-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
@@ -77,7 +80,7 @@
                     {{#each data.ai.features.region.tag}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="region-tag-{{annotationid}}">
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-tag-{{annotationid}}" data-body="{{{body}}}">
                                 <label class="form-check-label" for="region-tag-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
@@ -101,7 +104,7 @@
                     {{#each data.ai.features.full.description}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="description-{{annotationid}}">
+                                <input class="form-check-input" type="checkbox" role="switch" id="description-{{annotationid}}" data-body="{{{body}}}">
                                 <label class="form-check-label" for="description-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
@@ -125,7 +128,7 @@
                     {{#each data.ai.features.full.category}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="category-{{annotationid}}">
+                                <input class="form-check-input" type="checkbox" role="switch" id="category-{{annotationid}}" data-body="{{{body}}}">
                                 <label class="form-check-label" for="category-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
@@ -149,7 +152,7 @@
                     {{#each data.ai.features.full.tag}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="tag-{{annotationid}}">
+                                <input class="form-check-input" type="checkbox" role="switch" id="tag-{{annotationid}}" data-body="{{{body}}}">
                                 <label class="form-check-label" for="tag-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
@@ -165,14 +168,36 @@
 
 <script>
     let socket = io('/mcp');
+    let startButton = document.getElementById('game-toggle');
+    let gameStats = document.getElementById('game-stats');
+    let gallery = {
+        number: {{data.gallery.gallerynumber}},
+        name: '{{data.gallery.name}}',
+        floor: {{data.gallery.floor}},
+        objectcount: {{data.gallery.objectcount}}
+    };
 
     document.addEventListener('DOMContentLoaded', (event) => {
         // ready to go
+        startButton.onclick = startGame;
+
+        document.querySelectorAll("input").forEach(e => {
+            e.onclick = () => {
+                let packet = {
+                    "body": e.dataset.body
+                };
+                socket.emit("update game", packet);
+            }
+        });
+
+        socket.on('start up', (game) => {
+        });
     });
 
     function startGame(){
-
-        socket.emit('start game');
+        
+        startButton.innerHTML = "End Game";
+        socket.emit('start game', gallery);
     }
     
     function updateGame() {

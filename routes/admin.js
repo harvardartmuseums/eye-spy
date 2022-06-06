@@ -29,10 +29,12 @@ router.get('/galleries/:id', async function(req, res, next) {
 router.get('/object/:id', async (req, res, next) => {
   const object = await HAM.Objects.get(req.params.id);
   const ai = await HAM.Annotations.searchAll({image: object.images[0].imageid, size:100});
+  const gallery = await HAM.Galleries.get(object.gallery.galleryid);
   let ai_sorted = _.sortBy(ai, 'body');
 
   data.object = object;
   data.ai = {};
+  data.gallery = gallery;
   
   data.ai.features = _.groupBy(ai_sorted, 'feature');
   if (data.ai.features.region) {

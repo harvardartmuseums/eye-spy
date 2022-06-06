@@ -1,5 +1,6 @@
 
 let io = require('socket.io');
+let _ = require('lodash');
 
 let stats = {
     playerCount: 0,
@@ -7,28 +8,28 @@ let stats = {
 };
 
 let game = {
+    started: false,
     clues: [],
     gallery: {},
     object: {}
 }
 
-let state = Object.assign({}, game);
+let state = _.cloneDeep(game);
 
 module.exports.listen = function(app){
     io = io.listen(app)
 
     let mcpSockets = io.of('/mcp');
-    let playerSockets = io.of('/player');
-    
+    let playerSockets = io.of('/player');    
     
     playerSockets.on('connection', function(socket) {
         console.log('player connected');
         
-        state.playerCount +=1;
+        stats.playerCount +=1;
         socket.emit('join game', state);
         
         socket.on('disconnect', function() {
-            state.playerCount -=1;
+            stats.playerCount -=1;
             console.log('player disconnect')
         });
     });
@@ -38,12 +39,16 @@ module.exports.listen = function(app){
         
         socket.emit('start up', state);
 
-        socket.on('start game', function() {
-            playerSockets.emit('game started');
+        socket.on('start game', function(data) {
+            state = _.cloneDeep(game);
+            state.started = true;
+            state.gallery = data;
+            playerSockets.emit('game started', state);
         });
 
-        socket.on('update game', function() {
-            playerSockets.emit('game updated');
+        socket.on('update game', function(data) {
+            state.clues.push(data);
+            playerSockets.emit('game updated', state);
         })
 
         socket.on('end game', function() {
