@@ -1,10 +1,12 @@
-<div class="container-fluid p-4">
-    <header>
-        <h1>{{data.project.title}}</h1>
-        <p class="lead">{{data.project.description}}</p>
-        <p class="alert alert-dark">{{data.project.instructions}}</p>
-    </header>    
-    
+<header class="bg-light p-4 mb-4">
+    <h1 class="display-5 fw-bold">{{data.project.title}} MCP</h1>
+    <p class="lead">
+        Galleries
+    </p> 
+</header>
+
+
+<div class="container-fluid p-4">    
     {{!-- Main Controller Body --}}
     <div class="accordion accordion-flush" id="menu">    
         {{#each data.galleries}}
@@ -25,11 +27,3 @@
         {{/each}}
     </div>  
 </div>
-
-<script>
-    let socket = io('/mcp');
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // ready to go
-    })
-</script>
