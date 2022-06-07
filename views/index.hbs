@@ -1,11 +1,16 @@
-<div class="container-fluid p-4" id="home">
-    <h1>{{data.project.title}}</h1>
-    <p>{{data.project.description}}</p>
-    <p>{{data.project.instructions}}</p>
+<header class="bg-light p-4 mb-4">
+    <h1 class="display-5 fw-bold">{{data.project.title}}</h1>
+    <p class="lead">
+        {{data.project.description}}
+    </p> 
+</header>
 
+<div class="container-fluid pb-4" id="home">
+    <section class="mb-4">
+        <h2>Instructions</h2>
+        <p>{{data.project.instructions}}</p>
+    </section>
     <section>
-        <ul>
-            <li><a href="/game/grid">Join a Game</a></li>
-        </ul>
+        <a href="/game/grid" class="btn btn-lg btn-outline-primary p-4">Join a Game</a>
     </section>
 </div>    

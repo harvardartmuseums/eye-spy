@@ -39,20 +39,24 @@ module.exports.listen = function(app){
         
         socket.emit('start up', state);
 
-        socket.on('start game', function(data) {
+        socket.on('start game', function(object, gallery) {
             state = _.cloneDeep(game);
             state.started = true;
-            state.gallery = data;
+            state.gallery = gallery;
+            state.object = object
             playerSockets.emit('game started', state);
         });
 
         socket.on('update game', function(data) {
-            state.clues.push(data);
-            playerSockets.emit('game updated', state);
+            if (state.started) {
+                state.clues.push(data);
+                playerSockets.emit('game updated', state);
+            }
         })
 
-        socket.on('end game', function() {
-            playerSockets.emit('game ended');
+        socket.on('end game', function(data) {
+            state.started = false;
+            playerSockets.emit('game ended', state);
         });
 
         socket.on('disconnect', function() {

@@ -2,6 +2,6 @@
     "project": {
         "title": "A(Eye)-Spy",
         "description": "A simple game in which an AI tells you what it sees in a gallery and you try to find the object it's describing",
-        "instructions": "Wait for the game admin to start the game. Then read the clues and try to locate the art object."
+        "instructions": "Click 'Join a Game'. Wait for the MCP to start the game. Once the game starts, read the clues and try to locate the art object."
     }
 }

@@ -12,15 +12,12 @@
 
 <div class="container-fluid p-4" id="game-board">
     <div id="game-header">
-        Waiting for the MCP to start a game <span class="spinner-border spinner-border-sm"></span>
+       <span class="spinner-border spinner-border-sm "></span> Waiting for the MCP to start a game...
     </div>
     <ul id="game-message-list"></ul>
+    <div id="game-solution"></div>
 </div>
 
-<footer class="d-flex flex-wrap justify-content-between p-3 mt-4 border-top">
-    <p class="col-md-4 mb-0 text-muted"><a href="https://hvrd.art"><img width="40" src="/images/H_slash.png"></a></p>
-    <p class="col-md-4 mb-0 text-muted justify-content-end">Crafted with <a href="https://nodejs.org/en/">Node.js</a>, <a href="https://getbootstrap.com/">Bootstrap</a>, <a href="https://animejs.com/">Anime.js</a></p>        
-</footer>
 
 
 <script>
@@ -28,6 +25,7 @@
     let gameBoard = document.getElementById("game-board");
     let gameHeader = document.getElementById("game-header");
     let gameMessages = document.getElementById("game-message-list");
+    let gameSolution = document.getElementById("game-solution");
 
     document.addEventListener('DOMContentLoaded', (event) => {
         // ready to go
@@ -37,6 +35,7 @@
         });
 
         socket.on('game started', (game) => {
+            resetGameBoard();
             updateGameHeader(game);
             updateGameBoard(game);
         });        
@@ -46,19 +45,43 @@
         });
 
         socket.on('game ended', (game) => {
-
+            updateGameSolution(game);
         });                
     });
 
+    function resetGameBoard() {
+        gameHeader.innerHTML = '';
+        gameMessages.innerHTML = '';
+        gameSolution.innerHTML = '';
+    }
+
     function updateGameHeader(game) {
         gameHeader.innerHTML = '<h2>Let the games begin</h2>';
-        gameHeader.innerHTML += `<p>You are in gallery ${game.gallery.number}, ${game.gallery.name}, on Level ${game.gallery.floor}.</p><p>You are standing amongst ${game.gallery.objectcount}-ish artworks.</p><p>The AIs are colluding and about ready to challenge your notion of aesthetics and power to think outside the box.</p>`;
+        gameHeader.innerHTML += `<p>You are in gallery ${game.gallery.number}, ${game.gallery.name}, on Level ${game.gallery.floor}.</p>
+            <p>You are standing amongst ${game.gallery.objectcount}-ish artworks.</p>
+            <p>The AIs are colluding and about ready to challenge your notion of aesthetics and power to think outside the box.</p>
+            <p>We spy with our artificial eyes...</p>`;
     }
     
     function updateGameBoard(game) {
-        gameMessages.innerHTML = 'We spy with our artificial eyes...';
+        gameMessages.innerHTML = '';
         game.clues.forEach(clue => {
             gameMessages.innerHTML += `<li>${clue.body}</li>`;
         })
+        gameMessages.innerHTML += `<li><span class="spinner-border spinner-border-sm "></span></li>`;
+    }
+
+    function updateGameSolution(game) {
+        gameMessages.lastElementChild.remove();
+
+        gameSolution.innerHTML = `<h2>The MCP has ended the game</h2>
+            <p>The artwork you're looking for is <strong>${game.object.title}</strong>. It looks like this.</p>
+            <figure>
+                <img class="img-fluid" src="${game.object.iiifbaseuri}/full/550,/0/default.jpg">
+                <figcaption><a href="${game.object.url}">Visit me online</a></figcaption>
+            </figure>
+            <p class="mt-4 pt-3">
+                <a href="/game/grid" class="btn btn-lg btn-outline-primary p-4">Play Again</a>
+            </p>`;
     }
 </script>

@@ -1,3 +1,10 @@
+<header class="bg-light p-4 mb-4">
+    <h1 class="display-5 fw-bold">{{data.project.title}} MCP</h1>
+    <p class="lead">
+        Object Info
+    </p> 
+</header>
+
 <div class="container-fluid">
     <header class="p-2">
         <h1>{{data.object.title}}</h1>
@@ -8,8 +15,9 @@
         <div class="pb-3"> 
             {{data.object.labeltext}}
         </div>
-        <div class="d-grid">
-            <button type="button" class="btn btn-lg btn-secondary p-4" id="game-toggle">Start Game</button>
+        <div class="">
+            <button type="button" class="btn btn-lg btn-primary p-4" id="game-start">Start Game</button>
+            <button type="button" class="btn btn-lg btn-secondary p-4" id="game-end" disabled>End Game</button>
             <div class="mt-4" id="game-stats">
                 
             </div>
@@ -166,10 +174,19 @@
     </div>
 </div>
 
+
+
 <script>
     let socket = io('/mcp');
-    let startButton = document.getElementById('game-toggle');
+    let startButton = document.getElementById('game-start');
+    let endButton = document.getElementById('game-end');
     let gameStats = document.getElementById('game-stats');
+    let object = {
+        id: {{data.object.objectid}},
+        title: '{{data.object.title}}',
+        iiifbaseuri: '{{data.object.images.[0].iiifbaseuri}}',
+        url: '{{data.object.url}}'
+    };
     let gallery = {
         number: {{data.gallery.gallerynumber}},
         name: '{{data.gallery.name}}',
@@ -180,13 +197,11 @@
     document.addEventListener('DOMContentLoaded', (event) => {
         // ready to go
         startButton.onclick = startGame;
+        endButton.onclick = endGame;
 
         document.querySelectorAll("input").forEach(e => {
             e.onclick = () => {
-                let packet = {
-                    "body": e.dataset.body
-                };
-                socket.emit("update game", packet);
+                updateGame(e.dataset);
             }
         });
 
@@ -195,18 +210,27 @@
     });
 
     function startGame(){
-        
-        startButton.innerHTML = "End Game";
-        socket.emit('start game', gallery);
+        startButton.disabled = true;
+        endButton.disabled = false;
+
+        socket.emit('start game', object, gallery);
     }
     
-    function updateGame() {
-
-        socket.emit('update game');
+    function updateGame(dataset) {                
+        let packet = {
+            "body": dataset.body
+        };
+        socket.emit('update game', packet);
     }
 
     function endGame() {
+        endButton.disabled = true;
+        startButton.disabled = false;
 
-        socket.emit('end game');
+        document.querySelectorAll("input").forEach(e => {
+            e.checked = false;
+        });   
+
+        socket.emit('end game', object);
     }
 </script>
