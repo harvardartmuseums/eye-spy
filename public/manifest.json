@@ -1,6 +1,6 @@
 {
-    "short_name": "Lightbox Controller",
-    "name": "Lightbox Controller",
+    "short_name": "A(eye) Spy",
+    "name": "A(eye) Spy",
     "icons": [
       {
         "src": "/images/icons-192.png",
@@ -13,9 +13,9 @@
         "sizes": "512x512"
       }
     ],
-    "start_url": "/controller",
+    "start_url": "/",
     "background_color": "#000000",
     "display": "standalone",
-    "scope": "/controller",
+    "scope": "/",
     "theme_color": "#000000"
   }
