@@ -1,20 +1,11 @@
-<header class="bg-light p-4 mb-4">
+<header class="bg-light p-4">
     <h1 class="display-5 fw-bold">{{data.project.title}}</h1>
     <p class="lead">
-        An exercise in believing in the subjectivity of art
+        Believe in the subjectivity of art™
     </p> 
 </header>
 
 <div class="container-fluid p-4" id="game-board">
-    <div class="mb-4">
-        Here are a few simple rules to maximize your enjoyment
-        <ul>
-            <li>Don't read the wall labels</li>
-            <li >Don't believe what you see</li>
-            <li>Be receptive to different perspectives</li>
-        </ul>
-    </div>
-
     <div id="game-header">
        <span class="spinner-border spinner-border-sm "></span> Waiting for the MCP to start a game...
     </div>
@@ -35,13 +26,15 @@
         // ready to go
 
         socket.on('join game', (game) => {
-
+            if (game.started) {
+                resetGameBoard();
+                updateGameHeader(game);
+            }
         });
 
         socket.on('game started', (game) => {
             resetGameBoard();
             updateGameHeader(game);
-            updateGameBoard(game);
         });        
 
         socket.on('game updated', (game) => {
@@ -60,17 +53,31 @@
     }
 
     function updateGameHeader(game) {
-        gameHeader.innerHTML = '<h2>Let the games begin</h2>';
-        gameHeader.innerHTML += `<p>You are in gallery ${game.gallery.number}, ${game.gallery.name}, on Level ${game.gallery.floor}.</p>
-            <p>You are standing amongst ${game.gallery.objectcount}-ish artworks.</p>
-            <p>The AIs are colluding and about ready to challenge your notion of aesthetics and power to think outside the box.</p>
-            <p>We spy with our artificial eyes...</p>`;
+        gameHeader.innerHTML = '<h2 class="header" style="opacity:0.0">The MCP has started the game</h2>';
+        gameHeader.innerHTML += '<p class="header" style="opacity:0.0">Welcome to the grid.</p>';
+        gameHeader.innerHTML += `<p class="header" style="opacity:0.0">You are in gallery ${game.gallery.number}, ${game.gallery.name}, on Level ${game.gallery.floor}.</p>
+            <p class="header" style="opacity:0.0">You are standing amongst ${game.gallery.objectcount}-ish artworks.</p>
+            <p class="header" style="opacity:0.0">The AIs are colluding and about ready to challenge your notion of aesthetics and power to think outside the box.</p>
+            <p class="header" style="opacity:0.0">We spy with our artificial eyes...</p>`;
+   
+        anime({
+            targets: '.header',
+            opacity: 1.0,
+            delay: anime.stagger(500),
+            complete: (anim) => {
+                updateGameBoard(game);
+            }
+        });
     }
     
     function updateGameBoard(game) {
         gameMessages.innerHTML = '';
         game.clues.forEach(clue => {
-            gameMessages.innerHTML += `<li>${clue.body}</li>`;
+            if (clue.snippet) {
+                gameMessages.innerHTML += `<li><img src="${clue.snippet}"> ${clue.body}</li>`;
+            } else {
+                gameMessages.innerHTML += `<li>${clue.body}</li>`;
+            }
         })
         gameMessages.innerHTML += `<li><span class="spinner-border spinner-border-sm "></span></li>`;
     }

@@ -38,6 +38,11 @@ router.get('/object/:id', async (req, res, next) => {
   
   data.ai.features = _.groupBy(ai_sorted, 'feature');
   if (data.ai.features.region) {
+    data.ai.features.region.forEach(a => {
+      let coords = a.selectors[0].value.replace('xywh=','');
+      a.snippet = a.target.replace('/full/full', `/${coords}/full`);
+      a.snippetsmall = a.target.replace('/full/full', `/${coords}/!100,100`);
+    });
     data.ai.features.region = _.groupBy(data.ai.features.region, 'type');
   }
   if (data.ai.features.full) {

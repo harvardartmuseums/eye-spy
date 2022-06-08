@@ -11,6 +11,7 @@
         <h2>Gallery {{data.object.gallery.gallerynumber}}, {{data.object.gallery.name}}</h2>
         <figure>
             <img src="{{data.object.images.[0].iiifbaseuri}}/full/150,/0/default.jpg">
+            <figcaption><a href="{{data.object.url}}">View Full Record</a></figcaption>
         </figure>
         <div class="pb-3"> 
             {{data.object.labeltext}}
@@ -40,8 +41,8 @@
                     {{#each data.ai.features.region.text}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="region-text-{{annotationid}}" data-body="{{{body}}}">
-                                <label class="form-check-label" for="region-text-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-text-{{annotationid}}" data-body="{{{body}}}" data-snippet="{{snippetsmall}}">
+                                <label class="form-check-label" for="region-text-{{annotationid}}"><img src="{{snippetsmall}}"> {{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
                     {{/each}}
@@ -64,8 +65,8 @@
                     {{#each data.ai.features.region.face}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="region-face-{{annotationid}}" data-body="{{{body}}}">
-                                <label class="form-check-label" for="region-face-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-face-{{annotationid}}" data-body="{{{body}}}" data-snippet="{{snippetsmall}}">
+                                <label class="form-check-label" for="region-face-{{annotationid}}"><img src="{{snippetsmall}}"> {{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
                     {{/each}}
@@ -88,8 +89,8 @@
                     {{#each data.ai.features.region.tag}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="region-tag-{{annotationid}}" data-body="{{{body}}}">
-                                <label class="form-check-label" for="region-tag-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="region-tag-{{annotationid}}" data-body="{{{body}}}" data-snippet="{{snippetsmall}}">
+                                <label class="form-check-label" for="region-tag-{{annotationid}}"><img src="{{snippetsmall}}"> {{{body}}}, {{confidence}}, {{source}}</label>
                             </div>
                         </li>
                     {{/each}}
@@ -218,7 +219,8 @@
     
     function updateGame(dataset) {                
         let packet = {
-            "body": dataset.body
+            "body": dataset.body,
+            "snippet": dataset.snippet
         };
         socket.emit('update game', packet);
     }
