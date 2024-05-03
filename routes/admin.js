@@ -32,11 +32,14 @@ router.get('/object/:id', async (req, res, next) => {
   const gallery = await HAM.Galleries.get(object.gallery.galleryid);
   let ai_sorted = _.sortBy(ai, 'body');
 
+  object.aiurl = `https://ai.harvardartmuseums.org/object/${object.id}`;
+
   data.object = object;
   data.ai = {};
   data.gallery = gallery;
   
   data.ai.features = _.groupBy(ai_sorted, 'feature');
+
   if (data.ai.features.region) {
     data.ai.features.region.forEach(a => {
       let coords = a.selectors[0].value.replace('xywh=','');
@@ -45,10 +48,24 @@ router.get('/object/:id', async (req, res, next) => {
     });
     data.ai.features.region = _.groupBy(data.ai.features.region, 'type');
   }
+
   if (data.ai.features.full) {
     data.ai.features.full = _.groupBy(data.ai.features.full, 'type');
+    if (data.ai.features.full.tag) {
+      let tags = [];
+      data.ai.features.full.tag.forEach(t => t.bodyLowerCase = _.lowerCase(t.body));
+      data.ai.features.full.tag = _.groupBy(data.ai.features.full.tag, 'bodyLowerCase');
+      Object.keys(data.ai.features.full.tag).map(tag => {
+        tags.push({
+          body: tag,
+          tags: data.ai.features.full.tag[tag],
+          avgconfidence: _.meanBy(data.ai.features.full.tag[tag], 'confidence'),
+          source: _.map(data.ai.features.full.tag[tag], 'source').join(', ')
+        });
+      })
+      data.ai.features.full.tag = _.sortBy(tags, 'body');
+    }
   }  
-
   
   res.render('admin/object', { title: `MCP | ${data.project.title} | Harvard Art Museums`, data: data });
 });

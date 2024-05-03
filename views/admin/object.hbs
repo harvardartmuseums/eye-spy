@@ -11,7 +11,10 @@
         <h2>Gallery {{data.object.gallery.gallerynumber}}, {{data.object.gallery.name}}</h2>
         <figure>
             <img src="{{data.object.images.[0].iiifbaseuri}}/full/150,/0/default.jpg">
-            <figcaption><a href="{{data.object.url}}">View Full Record</a></figcaption>
+            <figcaption>
+                <a href="{{data.object.url}}">View Full Record</a><br>
+                <a href="{{data.object.aiurl}}">View the AI Record</a>
+                </figcaption>
         </figure>
         <div class="pb-3"> 
             {{data.object.labeltext}}
@@ -161,11 +164,11 @@
                     {{#each data.ai.features.full.tag}}
                         <li class="list-group-item p-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="tag-{{annotationid}}" data-body="{{{body}}}">
-                                <label class="form-check-label" for="tag-{{annotationid}}">{{{body}}}, {{confidence}}, {{source}}</label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="tag-{{@key}}" data-body="{{{body}}}">
+                                <label class="form-check-label" for="tag-{{@key}}"><strong>{{{body}}}</strong>, {{avgconfidence}}, {{source}} ({{tags.length}})</label>
                             </div>
                         </li>
-                    {{/each}}
+                    {{/each}}                        
                     </ul>
                 </div>
             </div>            
