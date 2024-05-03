@@ -11,7 +11,7 @@
     <div>
         <ul class="list-group">
             {{#data.objects}}
-                <li class="list-group-item"><img src="{{images.[0].iiifbaseuri}}/full/100,/0/default.jpg"><a href="/mcp/object/{{objectid}}">{{title}}</a></li>
+                <li class="list-group-item"><a href="/mcp/object/{{objectid}}"><img class="me-4" src="{{images.[0].iiifbaseuri}}/full/100,/0/default.jpg">{{title}}</a></li>
             {{/data.objects}}
         </ul>
     </div>
