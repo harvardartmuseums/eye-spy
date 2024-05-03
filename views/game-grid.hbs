@@ -89,7 +89,10 @@
             <p>The artwork you're looking for is <strong>${game.object.title}</strong>. It looks like this.</p>
             <figure>
                 <img class="img-fluid" src="${game.object.iiifbaseuri}/full/550,/0/default.jpg">
-                <figcaption><a href="${game.object.url}">Visit me online</a></figcaption>
+                <figcaption>
+                    <a href="${game.object.url}">Visit me online</a><br>
+                    <a href="${game.object.aiurl}">Read the AI interpretation</a>
+                </figcaption>
             </figure>
             <p class="mt-4 pt-3">
                 <a href="/game/grid" class="btn btn-lg btn-outline-primary p-4">Play Again</a>

@@ -14,7 +14,7 @@
             <figcaption>
                 <a href="{{data.object.url}}">View Full Record</a><br>
                 <a href="{{data.object.aiurl}}">View the AI Record</a>
-                </figcaption>
+            </figcaption>
         </figure>
         <div class="pb-3"> 
             {{data.object.labeltext}}
@@ -189,7 +189,8 @@
         id: {{data.object.objectid}},
         title: '{{data.object.title}}',
         iiifbaseuri: '{{data.object.images.[0].iiifbaseuri}}',
-        url: '{{data.object.url}}'
+        url: '{{data.object.url}}',
+        aiurl: '{{data.object.aiurl}}'
     };
     let gallery = {
         number: {{data.gallery.gallerynumber}},
